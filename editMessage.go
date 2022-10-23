@@ -1,25 +1,25 @@
-package editMessage
+package jak_go_package
 
 import (
 	"strings"
 )
 
-type Message struct {
+type editMessage struct {
 	message string
 }
 
-func (x Message) removeSpace() string {
+func (x editMessage) removeSpace() string {
 	return strings.Replace(x.message, " ", "", -1)
 }
 
-func (x Message) toLowerCase() string {
+func (x editMessage) toLowerCase() string {
 	return strings.ToLower(x.message)
 }
 
-func (x Message) toUpperCase() string {
+func (x editMessage) toUpperCase() string {
 	return strings.ToUpper(x.message)
 }
 
-func (x Message) toTitleCase() string {
+func (x editMessage) toTitleCase() string {
 	return strings.ToTitle(x.message)
 }
