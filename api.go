@@ -97,6 +97,28 @@ type Ben10 struct {
 	} `json:"omnitrix"`
 }
 
+type GenshinImpact struct {
+	Character []struct {
+		ID            int    `json:"id"`
+		Name          string `json:"name"`
+		Image         string `json:"image"`
+		Element       string `json:"element"`
+		Weapon        string `json:"weapon"`
+		SpecialDish   string `json:"special_dish"`
+		Sex           string `json:"sex"`
+		Birthday      string `json:"birthday"`
+		Constellation string `json:"constellation"`
+		Nation        string `json:"nation"`
+	} `json:"character"`
+	Elements []struct {
+		ID            int    `json:"id"`
+		Name          string `json:"name"`
+		Image         string `json:"image"`
+		Archon        string `json:"archon"`
+		StatusApplies string `json:"status_applies"`
+	} `json:"elements"`
+}
+
 type Api struct {
 	RapidAPIKey string
 }
@@ -171,6 +193,31 @@ func (x Api) GetBen10() (Ben10, error) {
 	}
 
 	var response Ben10
+	json.Unmarshal(body, &response)
+
+	return response, nil
+}
+
+func (x Api) GetGenshinImpact() (GenshinImpact, error) {
+	req, _ := http.NewRequest("GET", BASE_URL + "/genshinImpact", nil)
+
+	req.Header.Add("X-RapidAPI-Key", x.RapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", "jak_api.p.rapidapi.com")
+
+	res, resErr := http.DefaultClient.Do(req)
+	
+	if resErr != nil {
+		return GenshinImpact{}, resErr
+	}
+
+	defer res.Body.Close()
+	body, bodyErr := ioutil.ReadAll(res.Body)
+
+	if bodyErr != nil {
+		return GenshinImpact{}, bodyErr
+	}
+
+	var response GenshinImpact
 	json.Unmarshal(body, &response)
 
 	return response, nil
