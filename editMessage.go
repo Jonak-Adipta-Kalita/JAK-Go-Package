@@ -4,22 +4,22 @@ import (
 	"strings"
 )
 
-type editMessage struct {
+type EditMessage struct {
 	message string
 }
 
-func (x editMessage) removeSpace() string {
+func (x EditMessage) removeSpace() string {
 	return strings.Replace(x.message, " ", "", -1)
 }
 
-func (x editMessage) toLowerCase() string {
+func (x EditMessage) toLowerCase() string {
 	return strings.ToLower(x.message)
 }
 
-func (x editMessage) toUpperCase() string {
+func (x EditMessage) toUpperCase() string {
 	return strings.ToUpper(x.message)
 }
 
-func (x editMessage) toTitleCase() string {
+func (x EditMessage) toTitleCase() string {
 	return strings.ToTitle(x.message)
 }

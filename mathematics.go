@@ -1,22 +1,22 @@
 package jak_go_package
 
-type mathematics struct {
+type Mathematics struct {
 	number1 int
 	number2 int
 }
 
-func (x mathematics) add() int {
+func (x Mathematics) add() int {
 	return x.number1 + x.number2
 }
 
-func (x mathematics) sub() int {
+func (x Mathematics) sub() int {
 	return x.number1 - x.number2
 }
 
-func (x mathematics) mul() int {
+func (x Mathematics) mul() int {
 	return x.number1 * x.number2
 }
 
-func (x mathematics) div() int {
+func (x Mathematics) div() int {
 	return x.number1 / x.number2
 }
