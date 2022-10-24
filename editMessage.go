@@ -5,21 +5,21 @@ import (
 )
 
 type EditMessage struct {
-	message string
+	Message string
 }
 
-func (x EditMessage) removeSpace() string {
-	return strings.Replace(x.message, " ", "", -1)
+func (x EditMessage) RemoveSpace() string {
+	return strings.Replace(x.Message, " ", "", -1)
 }
 
-func (x EditMessage) toLowerCase() string {
-	return strings.ToLower(x.message)
+func (x EditMessage) ToLowerCase() string {
+	return strings.ToLower(x.Message)
 }
 
-func (x EditMessage) toUpperCase() string {
-	return strings.ToUpper(x.message)
+func (x EditMessage) ToUpperCase() string {
+	return strings.ToUpper(x.Message)
 }
 
-func (x EditMessage) toTitleCase() string {
-	return strings.ToTitle(x.message)
+func (x EditMessage) ToTitleCase() string {
+	return strings.ToTitle(x.Message)
 }
