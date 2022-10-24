@@ -119,6 +119,26 @@ type GenshinImpact struct {
 	} `json:"elements"`
 }
 
+type MughalEmpire struct {
+	Description string `json:"description"`
+	Kings       []struct {
+		ID          int    `json:"id"`
+		Name        string `json:"name"`
+		GivenName   string `json:"givenName"`
+		Image       string `json:"image"`
+		Description string `json:"description"`
+		Reigned     string `json:"reigned"`
+		Wives       []struct {
+			ID          int    `json:"id"`
+			Name        string `json:"name"`
+			Image       string `json:"image"`
+			Born        string `json:"born"`
+			Died        string `json:"died"`
+			Description string `json:"description"`
+		} `json:"wives"`
+	} `json:"kings"`
+}
+
 type Api struct {
 	RapidAPIKey string
 }
@@ -218,6 +238,31 @@ func (x Api) GetGenshinImpact() (GenshinImpact, error) {
 	}
 
 	var response GenshinImpact
+	json.Unmarshal(body, &response)
+
+	return response, nil
+}
+
+func (x Api) GetMughalEmpire() (MughalEmpire, error) {
+	req, _ := http.NewRequest("GET", BASE_URL + "/mughalEmpire", nil)
+
+	req.Header.Add("X-RapidAPI-Key", x.RapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", "jak_api.p.rapidapi.com")
+
+	res, resErr := http.DefaultClient.Do(req)
+	
+	if resErr != nil {
+		return MughalEmpire{}, resErr
+	}
+
+	defer res.Body.Close()
+	body, bodyErr := ioutil.ReadAll(res.Body)
+
+	if bodyErr != nil {
+		return MughalEmpire{}, bodyErr
+	}
+
+	var response MughalEmpire
 	json.Unmarshal(body, &response)
 
 	return response, nil
