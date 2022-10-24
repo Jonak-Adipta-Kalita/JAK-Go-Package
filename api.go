@@ -64,6 +64,31 @@ type JAK struct {
 	} `json:"social_medias"`
 }
 
+type BrawlStars struct {
+	Brawlers []struct {
+		ID        int      `json:"id"`
+		Name      string   `json:"name"`
+		Image     string   `json:"image"`
+		Gadget    []string `json:"gadget"`
+		Starpower []string `json:"starpower"`
+		Category  string   `json:"category"`
+		Pins      []struct {
+			Image string `json:"image"`
+		} `json:"pins"`
+		Sprays []struct {
+			Image string `json:"image"`
+		} `json:"sprays"`
+	} `json:"brawlers"`
+	Players struct {
+		Pins []struct {
+			Image string `json:"image"`
+		} `json:"pins"`
+		Sprays []struct {
+			Image string `json:"image"`
+		} `json:"sprays"`
+	} `json:"players"`
+}
+
 type Ben10 struct {
 	Omnitrix []struct {
 		ID    int    `json:"id"`
@@ -96,6 +121,31 @@ func (x Api) GetJAK() (JAK, error) {
 	}
 
 	var response JAK
+	json.Unmarshal(body, &response)
+
+	return response, nil
+}
+
+func (x Api) GetBrawlStars() (BrawlStars, error) {
+	req, _ := http.NewRequest("GET", BASE_URL + "/brawlStars", nil)
+
+	req.Header.Add("X-RapidAPI-Key", x.RapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", "jak_api.p.rapidapi.com")
+
+	res, resErr := http.DefaultClient.Do(req)
+	
+	if resErr != nil {
+		return BrawlStars{}, resErr
+	}
+
+	defer res.Body.Close()
+	body, bodyErr := ioutil.ReadAll(res.Body)
+
+	if bodyErr != nil {
+		return BrawlStars{}, bodyErr
+	}
+
+	var response BrawlStars
 	json.Unmarshal(body, &response)
 
 	return response, nil
