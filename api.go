@@ -2,8 +2,10 @@ package jak_go_package
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 )
 
 const BASE_URL string = "https://jak_api.p.rapidapi.com"
@@ -329,4 +331,28 @@ func (x Api) GetMiraculous() (Miraculous, error) {
 	json.Unmarshal(body, &response)
 
 	return response, nil
+}
+
+func (x Api) GetAlexisResponse(message string) (string, error) {
+	req, _ := http.NewRequest("POST", BASE_URL + "/ai", strings.NewReader("{\r\"message\": \"" + message + "\"\r}"))
+
+	req.Header.Add("X-RapidAPI-Key", x.RapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", "jak_api.p.rapidapi.com")
+
+	res, resErr := http.DefaultClient.Do(req)
+	
+	if resErr != nil {
+		return "", resErr
+	}
+
+	defer res.Body.Close()
+	body, bodyErr := ioutil.ReadAll(res.Body)
+
+	if bodyErr != nil {
+		return "", bodyErr
+	}
+
+	fmt.Print(string(body))
+
+	return string(body), nil
 }
