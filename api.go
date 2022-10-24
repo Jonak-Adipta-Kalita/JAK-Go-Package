@@ -12,6 +12,31 @@ type Api struct {
 	RapidAPIKey string
 }
 
+func (x Api) GetJAK() (JAK, error) {
+	req, _ := http.NewRequest("GET", BASE_URL + "/jak", nil)
+
+	req.Header.Add("X-RapidAPI-Key", x.RapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", "jak_api.p.rapidapi.com")
+
+	res, resErr := http.DefaultClient.Do(req)
+	
+	if resErr != nil {
+		return JAK{}, resErr
+	}
+
+	defer res.Body.Close()
+	body, bodyErr := ioutil.ReadAll(res.Body)
+
+	if bodyErr != nil {
+		return JAK{}, bodyErr
+	}
+
+	var response JAK
+	json.Unmarshal(body, &response)
+
+	return response, nil
+}
+
 func (x Api) GetBen10() (Ben10, error) {
 	req, _ := http.NewRequest("GET", BASE_URL + "/ben10", nil)
 
