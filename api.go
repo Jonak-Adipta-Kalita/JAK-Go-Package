@@ -139,6 +139,44 @@ type MughalEmpire struct {
 	} `json:"kings"`
 }
 
+type Miraculous struct {
+	Kwamis []struct {
+		ID           int      `json:"id"`
+		Name         string   `json:"name"`
+		Image        string   `json:"image"`
+		Owner        []string `json:"owner"`
+		Holder       string   `json:"holder"`
+		Miraculous   string   `json:"miraculous"`
+		Power        string   `json:"power"`
+		MagicalWords string   `json:"magical_words"`
+	} `json:"kwamis"`
+	Holders []struct {
+		ID           int      `json:"id"`
+		Name         string   `json:"name"`
+		Image        string   `json:"image"`
+		RealName     string   `json:"real_name"`
+		Kwami        []string `json:"kwami"`
+		MagicalWords string   `json:"magical_words"`
+		MainPower    string   `json:"main_power"`
+	} `json:"holders"`
+	Akumatized []struct {
+		ID                int      `json:"id"`
+		Name              string   `json:"name"`
+		Image             string   `json:"image"`
+		Victim            string   `json:"victim"`
+		Goals             []string `json:"goals"`
+		Quote             string   `json:"quote"`
+		PowerAndAbilities []string `json:"power_and_abilities"`
+	} `json:"akumatized"`
+	Amokatized []struct {
+		ID              int      `json:"id"`
+		Name            string   `json:"name"`
+		Image           string   `json:"image"`
+		Serve           string   `json:"serve"`
+		PowerAndAbility []string `json:"power_and_ability"`
+	} `json:"amokatized"`
+}
+
 type Api struct {
 	RapidAPIKey string
 }
@@ -263,6 +301,31 @@ func (x Api) GetMughalEmpire() (MughalEmpire, error) {
 	}
 
 	var response MughalEmpire
+	json.Unmarshal(body, &response)
+
+	return response, nil
+}
+
+func (x Api) GetMiraculous() (Miraculous, error) {
+	req, _ := http.NewRequest("GET", BASE_URL + "/miraculous", nil)
+
+	req.Header.Add("X-RapidAPI-Key", x.RapidAPIKey)
+	req.Header.Add("X-RapidAPI-Host", "jak_api.p.rapidapi.com")
+
+	res, resErr := http.DefaultClient.Do(req)
+	
+	if resErr != nil {
+		return Miraculous{}, resErr
+	}
+
+	defer res.Body.Close()
+	body, bodyErr := ioutil.ReadAll(res.Body)
+
+	if bodyErr != nil {
+		return Miraculous{}, bodyErr
+	}
+
+	var response Miraculous
 	json.Unmarshal(body, &response)
 
 	return response, nil
