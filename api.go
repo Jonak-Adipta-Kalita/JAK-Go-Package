@@ -8,6 +8,70 @@ import (
 
 const BASE_URL string = "https://jak_api.p.rapidapi.com"
 
+type JAK struct {
+	Hobby []struct {
+		ID    int    `json:"id"`
+		Value string `json:"value"`
+		Games []struct {
+			ID          int    `json:"id"`
+			Platform    string `json:"platform"`
+			Value       string `json:"value"`
+			Description string `json:"description"`
+			Link        string `json:"link"`
+			ImageURL    string `json:"imageURL"`
+		} `json:"games,omitempty"`
+		Languages []struct {
+			ID       int    `json:"id"`
+			Value    string `json:"value"`
+			Website  string `json:"website"`
+			Level    int    `json:"level"`
+			ImageURL string `json:"imageURL"`
+		} `json:"languages,omitempty"`
+		Frameworks []struct {
+			ID        int      `json:"id"`
+			Value     string   `json:"value"`
+			Website   string   `json:"website"`
+			Languages []string `json:"languages"`
+			Level     int      `json:"level"`
+			ImageURL  string   `json:"imageURL"`
+		} `json:"frameworks,omitempty"`
+		Instruments []struct {
+			ID       int    `json:"id"`
+			Value    string `json:"value"`
+			ImageURL string `json:"imageURL"`
+		} `json:"instruments,omitempty"`
+	} `json:"hobby"`
+	Pictures []struct {
+		ID     int    `json:"id"`
+		Name   string `json:"name"`
+		Height string `json:"height"`
+		Width  string `json:"width"`
+		Image  string `json:"image"`
+	} `json:"pictures"`
+	Games   []interface{} `json:"games"`
+	FavFood []struct {
+		ID          int      `json:"id"`
+		Value       string   `json:"value"`
+		ImageURL    string   `json:"imageURL"`
+		Ingredients []string `json:"ingredients"`
+	} `json:"fav_food"`
+	SocialMedias []struct {
+		ID       int    `json:"id"`
+		Value    string `json:"value"`
+		ImageURL string `json:"imageURL"`
+		Link     string `json:"link"`
+		Username string `json:"username"`
+	} `json:"social_medias"`
+}
+
+type Ben10 struct {
+	Omnitrix []struct {
+		ID    int    `json:"id"`
+		Name  string `json:"name"`
+		Image string `json:"image"`
+	} `json:"omnitrix"`
+}
+
 type Api struct {
 	RapidAPIKey string
 }
